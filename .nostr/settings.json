@@ -2,7 +2,7 @@
   "info": {
     "relay_url": "wss://nostr.chaker.net",
     "name": "nostr.chaker.net",
-    "description": "Jack Chakany's Nostr Relay. Also the default relay for nosbin.com",
+    "description": "The Chaker nostr relay.",
     "pubkey": "81d0ccce4591fc4e19e3ef752a2b003ef23a986cb31e7835ea7d8d7cd96d47ea",
     "contact": "contact@chaker.net"
   },
