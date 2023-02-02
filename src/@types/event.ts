@@ -1,8 +1,7 @@
-import { EventDeduplicationMetadataKey, EventDelegatorMetadataKey, EventKinds } from '../constants/base'
-import { EventId, Pubkey, Tag } from './base'
+import { ContextMetadata, EventId, Pubkey, Tag } from './base'
+import { ContextMetadataKey, EventDeduplicationMetadataKey, EventDelegatorMetadataKey, EventKinds } from '../constants/base'
 
-
-export interface Event {
+export interface BaseEvent {
   id: EventId
   pubkey: Pubkey
   created_at: number
@@ -11,6 +10,16 @@ export interface Event {
   sig: string
   content: string
 }
+
+export interface Event extends BaseEvent {
+  [ContextMetadataKey]?: ContextMetadata
+}
+
+export type RelayedEvent = Event
+
+export type UnsignedEvent = Omit<Event, 'sig'>
+
+export type UnidentifiedEvent = Omit<UnsignedEvent, 'id'>
 
 export interface DelegatedEvent extends Event {
   [EventDelegatorMetadataKey]?: Pubkey

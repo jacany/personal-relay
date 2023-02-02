@@ -1,5 +1,5 @@
 import { anyPass, equals, isNil, map, propSatisfies, uniqWith } from 'ramda'
-import { addAbortSignal } from 'stream'
+// import { addAbortSignal } from 'stream'
 import { pipeline } from 'stream/promises'
 
 import { createEndOfStoredEventsNoticeMessage, createNoticeMessage, createOutgoingEventMessage } from '../utils/messages'
@@ -10,26 +10,26 @@ import { SubscriptionFilter, SubscriptionId } from '../@types/subscription'
 import { createLogger } from '../factories/logger-factory'
 import { Event } from '../@types/event'
 import { IEventRepository } from '../@types/repositories'
-import { ISettings } from '../@types/settings'
 import { IWebSocketAdapter } from '../@types/adapters'
+import { Settings } from '../@types/settings'
 import { SubscribeMessage } from '../@types/messages'
 import { WebSocketAdapterEvent } from '../constants/adapter'
 
 const debug = createLogger('subscribe-message-handler')
 
 export class SubscribeMessageHandler implements IMessageHandler, IAbortable {
-  private readonly abortController: AbortController
+  //private readonly abortController: AbortController
 
   public constructor(
     private readonly webSocket: IWebSocketAdapter,
     private readonly eventRepository: IEventRepository,
-    private readonly settings: () => ISettings,
+    private readonly settings: () => Settings,
   ) {
-    this.abortController = new AbortController()
+    //this.abortController = new AbortController()
   }
 
   public abort(): void {
-    this.abortController.abort()
+    //this.abortController.abort()
   }
 
   public async handleMessage(message: SubscribeMessage): Promise<void> {
@@ -58,11 +58,11 @@ export class SubscribeMessageHandler implements IMessageHandler, IAbortable {
 
     const findEvents = this.eventRepository.findByFilters(filters).stream()
 
-    const abortableFintEvents = addAbortSignal(this.abortController.signal, findEvents)
+    // const abortableFindEvents = addAbortSignal(this.abortController.signal, findEvents)
 
     try {
       await pipeline(
-        abortableFintEvents,
+        findEvents,
         streamFilter(propSatisfies(isNil, 'deleted_at')),
         streamMap(toNostrEvent),
         streamFilter(isSubscribedToEvent),
@@ -71,8 +71,8 @@ export class SubscribeMessageHandler implements IMessageHandler, IAbortable {
       )
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') {
-        debug('subscription aborted: %o', error)
-        findEvents.destroy()
+        debug('subscription %s aborted: %o', subscriptionId, error)
+       findEvents.destroy()
       } else {
         debug('error streaming events: %o', error)
       }

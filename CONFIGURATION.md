@@ -7,6 +7,7 @@ The following environment variables can be set:
 | Name                             | Description                    | Default                |
 |----------------------------------|--------------------------------|------------------------|
 | RELAY_PORT                       | Relay's server port            | 8008                   |
+| RELAY_PRIVATE_KEY                | Relay's private key in hex     | (auto-generated)       |
 | WORKER_COUNT                     | Number of workers override     | No. of available CPUs  |
 | DB_HOST                          | PostgresSQL Hostname           |                        |
 | DB_PORT                          | PostgreSQL Port                | 5432                   |
@@ -38,7 +39,7 @@ The following environment variables can be set:
 
 # Settings
 
-Running `nostream` for the first time creates the settings file in `<project_root>/.nostr/settings.json`. If the file is not created and an error is thrown ensure that the `<project_root>/.nostr` folder exists. The configuration directory can be changed by setting the `NOSTR_CONFIG_DIR` environment variable.
+Running `nostream` for the first time creates the settings file in `<project_root>/.nostr/settings.yaml`. If the file is not created and an error is thrown ensure that the `<project_root>/.nostr` folder exists. The configuration directory can be changed by setting the `NOSTR_CONFIG_DIR` environment variable.
 
 | Name                                        | Description                                                                   |
 |---------------------------------------------|-------------------------------------------------------------------------------|
@@ -47,8 +48,11 @@ Running `nostream` for the first time creates the settings file in `<project_roo
 | info.description                            | Public description of your relay. (e.g. Toronto Bitcoin Group Public Relay) |
 | info.pubkey                                 | Relay operator's Nostr pubkey in hex format. |
 | info.contact                                | Relay operator's contact. (e.g. mailto:operator@relay-your-domain.com) |
-| network.max_payload_size                    | Maximum number of bytes accepted per WebSocket frame |
-| network.remote_ip_header                    | HTTP header from proxy containing IP address from client. |
+| network.maxPayloadSize                      | Maximum number of bytes accepted per WebSocket frame |
+| network.remoteIpHeader                      | HTTP header from proxy containing IP address from client. |
+| mirroring.static[].address                  | Address of mirrored relay. (e.g. ws://100.100.100.100:8008) |
+| mirroring.static[].filters                  | Subscription filters used to mirror. |
+| mirroring.static[].secret                   | Secret to pass to relays. Nostream relays only. Optional. |
 | workers.count                               | Number of workers to spin up to handle incoming connections. |
 |                                             | Spin workers as many CPUs are available when set to zero. Defaults to zero. |
 | limits.event.eventId.minLeadingZeroBits     | Leading zero bits required on every incoming event for proof of work. |
@@ -61,7 +65,8 @@ Running `nostream` for the first time creates the settings file in `<project_roo
 | limits.event.pubkey.blacklist               | List of public keys to always reject. Public keys in this list will not be able to post to this relay. |
 | limits.event.createdAt.maxPositiveDelta     | Maximum number of seconds an event's `created_at` can be in the future. Defaults to 900 (15 minutes). Disabled when set to zero. |
 | limits.event.createdAt.minNegativeDelta     | Maximum number of secodns an event's `created_at` can be in the past.  Defaults to zero. Disabled when set to zero. |
-| limits.event.content.maxLength              | Maximum length of `content`. Defaults to 1 MB. Disabled when set to zero. |
+| limits.event.content[].kinds                | List of event kinds to apply limit. Use `[min, max]` for ranges. Optional. |
+| limits.event.content[].maxLength            | Maximum length of `content`. Defaults to 1 MB. Disabled when set to zero. |
 | limits.event.rateLimits[].kinds             | List of event kinds rate limited. Use `[min, max]` for ranges. Optional. |
 | limits.event.rateLimits[].period            | Rate limiting period in milliseconds. |
 | limits.event.rateLimits[].rate              | Maximum number of events during period. |
