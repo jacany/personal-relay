@@ -55,9 +55,9 @@ limits:
     - period: 1000
       rate: 6
     - period: 60000
-      rate: 30
+      rate: 50
     - period: 3600000
-      rate: 300
+      rate: 500
     - period: 86400000
       rate: 1440
     ipWhitelist:
