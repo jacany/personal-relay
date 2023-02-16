@@ -1,9 +1,9 @@
 info:
-  relay_url: wss://relay.nosbin.com
-  name: relay.nosbin.com
-  description: nosbin.com default relay
-  pubkey: c5fb6ecc876e0458e3eca9918e370cbcd376901c58460512fe537a46e58c38bb
-  contact: contact@chaker.net
+  relay_url: wss://nostr.jacany.com
+  name: nostr.jacany.com
+  description: Jack Chakany's archiving relay.
+  pubkey: 81d0ccce4591fc4e19e3ef752a2b003ef23a986cb31e7835ea7d8d7cd96d47ea
+  contact: jacany@chaker.net
 payments:
   enabled: false
   processor: zebedee
@@ -55,9 +55,9 @@ limits:
     - period: 1000
       rate: 6
     - period: 60000
-      rate: 50
+      rate: 30
     - period: 3600000
-      rate: 500
+      rate: 300
     - period: 86400000
       rate: 1440
     ipWhitelist:
@@ -68,12 +68,12 @@ limits:
     eventId:
       minLeadingZeroBits: 0
     kind:
-      whitelist: [1050, 1051]
+      whitelist: []
       blacklist: []
     pubkey:
       minBalance: 0
       minLeadingZeroBits: 0
-      whitelist: []
+      whitelist: [81d0ccce4591fc4e19e3ef752a2b003ef23a986cb31e7835ea7d8d7cd96d47ea, c5fb6ecc876e0458e3eca9918e370cbcd376901c58460512fe537a46e58c38bb]
       blacklist: []
     createdAt:
       maxPositiveDelta: 900
@@ -148,7 +148,7 @@ limits:
       period: 86400000
       rate: 2880
     whitelists:
-      pubkeys: [c5fb6ecc876e0458e3eca9918e370cbcd376901c58460512fe537a46e58c38bb]
+      pubkeys: [81d0ccce4591fc4e19e3ef752a2b003ef23a986cb31e7835ea7d8d7cd96d47ea]
       ipAddresses:
       - "::1"
       - "10.10.10.1"
