@@ -1,4 +1,4 @@
-# [nostream](https://github.com/Cameri/nostream)
+# [nostreamf](https://github.com/Cameri/nostream)
 
 <p align="center">
   <img alt="nostream logo" height="256px" width="256px" src="https://user-images.githubusercontent.com/378886/198158439-86e0345a-adc8-4efe-b0ab-04ff3f74c1b2.jpg" />
