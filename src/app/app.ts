@@ -83,6 +83,7 @@ export class App implements IRunnable {
       debug('starting worker')
       createWorker({
         WORKER_TYPE: 'worker',
+        WORKER_INDEX: i.toString(),
       })
     }
     logCentered(`${workerCount} client workers started`, width)
@@ -101,7 +102,7 @@ export class App implements IRunnable {
           MIRROR_INDEX: i.toString(),
         })
       }
-      logCentered(`${mirrors.length} maintenance worker started`, width)
+      logCentered(`${mirrors.length} static-mirroring worker started`, width)
     }
 
     debug('settings: %O', settings)
